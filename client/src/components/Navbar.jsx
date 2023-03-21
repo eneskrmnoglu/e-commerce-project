@@ -1,9 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUserAction } from "../actions/userActions";
 
 function Navbar() {
   const cartState = useSelector((state) => state.cartReducer);
+  const userState = useSelector((state) => state.loginUserReducer);
+
+  const { currentUser, success } = userState;
+
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logoutUserAction());
+  };
 
   return (
     <div>
@@ -27,36 +37,65 @@ function Navbar() {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link className="nav-link " aria-current="page" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Features
+                  Menüler
                 </Link>
               </li>
             </ul>
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Giriş Yap <i class="fa-solid fa-right-to-bracket"></i>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Kayıt Ol <i class="fa-solid fa-registered"></i>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/sepet">
-                  Sepet
-                  <i className="fa-solid fa-bag-shopping mx-2"></i>
-                  <span className="position-absolute top-10 start-80 translate-middle badge rounded-pill bg-danger">
-                    {cartState.cartItems.length}
-                  </span>
-                </Link>
-              </li>
-            </ul>
+            {currentUser ? (
+              <ul className="navbar-nav ms-auto">
+                <div className="dropdown ">
+                  <button
+                    className="btn btn-danger dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Hoşgeldiniz {currentUser.name}
+                  </button>
+                  <ul className="dropdown-menu bg-warning">
+                    <li>
+                      <a className="dropdown-item">Siparişlerim</a>
+                    </li>
+                    <li>
+                      <a className="dropdown-item" onClick={logoutHandler}>
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/sepet">
+                    Sepet
+                    <i className="fa-solid fa-bag-shopping mx-2"></i>
+                    <span className="position-absolute top-10 start-80 translate-middle badge rounded-pill bg-danger">
+                      {cartState.cartItems.length}
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            ) : (
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Giriş Yap <i class="fa-solid fa-right-to-bracket"></i>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Kayıt Ol <i class="fa-solid fa-registered"></i>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/sepet">
+                    Sepet
+                    <i className="fa-solid fa-bag-shopping mx-2"></i>
+                    <span className="position-absolute top-10 start-80 translate-middle badge rounded-pill bg-danger">
+                      {cartState.cartItems.length}
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>

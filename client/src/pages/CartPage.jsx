@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addToCartAction, deleteFromCartAction } from "../actions/cartActions";
 
 function CartPage() {
@@ -9,12 +10,31 @@ function CartPage() {
 
   const dispatch = useDispatch();
 
+  const toplamfiyat = cartItems.reduce((x, urun) => x + urun.fiyatlar, 0);
+  const userState = useSelector((state) => state.loginUserReducer);
+
+  const navigate = useNavigate();
+
+  const { currentUser } = userState;
+
+  const checkoutHandler = () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  };
+
   return (
     <div>
       <div className="container">
         <div className="text-center">
           <h2 className="display-2 text-warning">Sepetim</h2>
-
+          <h4 className="text-danger">Toplam Fiyat {toplamfiyat} ₺</h4>
+          <button
+            className="btn btn-outline-danger mb-3 w-25"
+            onClick={checkoutHandler}
+          >
+            HEMEN ÖDE!
+          </button>
           {cartItems.map((urun) => (
             <div className="row border border-3 border-warning shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-light text-warning">
               <div className="col-md-4">

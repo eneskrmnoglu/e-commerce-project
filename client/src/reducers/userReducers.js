@@ -9,6 +9,7 @@ export const registerUserReducer = (state = {}, action) => {
       return {
         loading: false,
         success: true,
+        registeredUser: action.payload,
       };
     case "USER_REGISTER_FAILED":
       return {
@@ -28,6 +29,7 @@ export const loginUserReducer = (state = {}, action) => {
     case "USER_LOGIN_REQUEST":
       return {
         loading: true,
+        success: false,
       };
     case "USER_LOGIN_SUCCESS":
       return {
@@ -37,7 +39,8 @@ export const loginUserReducer = (state = {}, action) => {
       };
     case "USER_LOGIN_FAILED":
       return {
-        loading: true,
+        loading: false,
+        success: false,
         error: action.payload,
       };
 

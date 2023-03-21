@@ -1,8 +1,9 @@
 import { stripBasename } from "@remix-run/router";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { registerUserAction } from "../actions/userActions";
 
@@ -17,19 +18,12 @@ const RegisterPage = () => {
   const userState = useSelector((state) => state.registerUserReducer);
   const { success, loading, users } = userState;
 
+  const navigate = useNavigate();
+
   const kaydolHandler = () => {
     if (password != confirmPassword) {
       Swal.fire("Şifreler uyuşmamaktadır!");
     } else {
-      if (success == true) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Kullanıcı Kaydı Başarılı",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
       const user = {
         name: name,
         mail: mail,
@@ -37,6 +31,21 @@ const RegisterPage = () => {
       };
       console.log(user);
       dispatch(registerUserAction(user));
+      if (success) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Kullanıcı Kaydı Başarılı",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Böyle bir kullanıcı var!",
+        });
+      }
     }
   };
 

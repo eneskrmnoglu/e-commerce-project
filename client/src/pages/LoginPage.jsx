@@ -13,16 +13,22 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.loginUserReducer);
-  const { success, loading, users } = userState;
+  const { success, currentUser, loading, users } = userState;
 
   const girisHandler = () => {
-    if (success == true) {
+    if (success && success) {
       Swal.fire({
         position: "center",
         icon: "success",
         title: "Kullanıcı Girişi Başarılı",
         showConfirmButton: false,
         timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Böyle bir kullanıcı yok!",
       });
     }
     const user = {
@@ -34,11 +40,11 @@ function LoginPage() {
   };
   const navigate = useNavigate();
 
-  //   useEffect(() => {
-  //     if (localStorage.getItem("currentUser")) {
-  //       navigate("/");
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (localStorage.getItem("currentUser")) {
+      navigate("/");
+    }
+  }, [currentUser]);
 
   return (
     <div style={{ marginTop: "100px" }}>
@@ -63,7 +69,7 @@ function LoginPage() {
           onClick={girisHandler}
         >
           {/* <Link to="/login">Giriş İçin Tıkla</Link> */}
-          KAYIT OL
+          GİRİŞ YAP!
         </button>
       </div>
     </div>
