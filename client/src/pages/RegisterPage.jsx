@@ -16,13 +16,20 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.registerUserReducer);
-  const { success, loading, users } = userState;
+  const { success, loading, users, error } = userState;
 
   const navigate = useNavigate();
 
   const kaydolHandler = () => {
     if (password != confirmPassword) {
       Swal.fire("Şifreler uyuşmamaktadır!");
+    } else if (
+      name == "" ||
+      mail == "" ||
+      password == "" ||
+      confirmPassword == ""
+    ) {
+      Swal.fire("Eksik alanları doldurunuz !");
     } else {
       const user = {
         name: name,
@@ -31,7 +38,7 @@ const RegisterPage = () => {
       };
       console.log(user);
       dispatch(registerUserAction(user));
-      if (success) {
+      if (!error) {
         Swal.fire({
           position: "center",
           icon: "success",

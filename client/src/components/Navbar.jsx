@@ -54,7 +54,9 @@ function Navbar() {
                   </button>
                   <ul className="dropdown-menu bg-warning">
                     <li>
-                      <a className="dropdown-item">Siparişlerim</a>
+                      <Link className="dropdown-item" to="/myorders">
+                        Siparişlerim
+                      </Link>
                     </li>
                     <li>
                       <a className="dropdown-item" onClick={logoutHandler}>

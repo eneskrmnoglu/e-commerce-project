@@ -5,6 +5,7 @@ const burgerModel = require("./models/burgerModel");
 const app = express();
 const burgersRoute = require("./routes/burgersRoute");
 const usersRoute = require("./routes/usersRoute");
+const ordersRoute = require("./routes/ordersRoute");
 
 app.use(express.json());
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(cors());
 //http://localhost:4000/api/burgers/getBurgers
 app.use("/api/burgers/", burgersRoute);
 app.use("/api/users/", usersRoute);
+app.use("/api/orders/", ordersRoute);
 
 //serverımızı inşa edeceğimiz portu belirleyerek ayağa kaldırdık.
 app.listen(4000, () => {

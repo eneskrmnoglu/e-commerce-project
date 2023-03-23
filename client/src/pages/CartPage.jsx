@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCartAction, deleteFromCartAction } from "../actions/cartActions";
+import Checkout from "../components/Checkout";
 
 function CartPage() {
   const cartState = useSelector((state) => state.cartReducer);
@@ -12,16 +13,15 @@ function CartPage() {
 
   const toplamfiyat = cartItems.reduce((x, urun) => x + urun.fiyatlar, 0);
   const userState = useSelector((state) => state.loginUserReducer);
+  const { currentUser, success, loading } = userState;
 
   const navigate = useNavigate();
 
-  const { currentUser } = userState;
-
-  const checkoutHandler = () => {
-    if (!currentUser) {
-      navigate("/login");
-    }
-  };
+  // const checkoutHandler = () => {
+  //   if (!currentUser) {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <div>
@@ -29,12 +29,8 @@ function CartPage() {
         <div className="text-center">
           <h2 className="display-2 text-warning">Sepetim</h2>
           <h4 className="text-danger">Toplam Fiyat {toplamfiyat} ₺</h4>
-          <button
-            className="btn btn-outline-danger mb-3 w-25"
-            onClick={checkoutHandler}
-          >
-            HEMEN ÖDE!
-          </button>
+          {currentUser ? <Checkout toplamfiyat={toplamfiyat} /> : <></>}
+
           {cartItems.map((urun) => (
             <div className="row border border-3 border-warning shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-light text-warning">
               <div className="col-md-4">

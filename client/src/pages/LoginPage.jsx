@@ -13,10 +13,10 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   const userState = useSelector((state) => state.loginUserReducer);
-  const { success, currentUser, loading, users } = userState;
+  const { success, error, currentUser, loading, users } = userState;
 
   const girisHandler = () => {
-    if (success && success) {
+    if (!error) {
       Swal.fire({
         position: "center",
         icon: "success",
