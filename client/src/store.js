@@ -26,12 +26,19 @@ const currentUser = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser"))
   : null;
 
+const userOrders = localStorage.getItem("userOrders")
+  ? JSON.parse(localStorage.getItem("userOrders"))
+  : [];
+
 const initialState = {
   cartReducer: {
     cartItems: cartItems,
   },
   loginUserReducer: {
     currentUser: currentUser,
+  },
+  userOrders: {
+    userOrders: userOrders,
   },
 };
 

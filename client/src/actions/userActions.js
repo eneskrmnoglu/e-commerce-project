@@ -19,7 +19,8 @@ export const registerUserAction = (user) => async (dispatch) => {
 };
 
 //Login Action
-export const loginUserAction = (user) => async (dispatch) => {
+export const loginUserAction = (user) => async (dispatch, getState) => {
+  // const userOrders = getState().getUsersOrdersReducer.orders;
   dispatch({ type: "USER_LOGIN_REQUEST" });
 
   try {
@@ -31,6 +32,7 @@ export const loginUserAction = (user) => async (dispatch) => {
 
     dispatch({ type: "USER_LOGIN_SUCCESS", payload: response.data });
     localStorage.setItem("currentUser", JSON.stringify(response.data));
+    // localStorage.setItem("userOrders", JSON.stringify(userOrders));
     //window.location.href = "/";
   } catch (error) {
     dispatch({ type: "USER_LOGIN_FAILED", payload: error });
