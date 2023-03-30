@@ -43,6 +43,9 @@ function LoginPage() {
   useEffect(() => {
     if (localStorage.getItem("currentUser")) {
       navigate("/");
+      if (currentUser.isAdmin != false) {
+        window.location.href = "/admin";
+      }
     }
   }, [currentUser]);
 

@@ -5,6 +5,7 @@ import { getAllBurgers } from "../actions/burgerActions";
 import MenuList from "../components/MenuList";
 import menuler from "../yemekdata";
 import ClipLoader from "react-spinners/ClipLoader";
+import Filter from "../components/Filter";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function HomePage() {
   return (
     <div>
       <div className="row">
+        <Filter />
         {loading ? (
           <div className="text-center my-5">
             <div

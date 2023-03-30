@@ -1,11 +1,21 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import { getAllBurgersReducer } from "./reducers/burgerReducers";
+import {
+  addBurgersReducer,
+  editBurgerReducer,
+  getAllBurgersReducer,
+  getBurgerByIdReducer,
+} from "./reducers/burgerReducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { cartReducer } from "./reducers/cartReducers";
-import { loginUserReducer, registerUserReducer } from "./reducers/userReducers";
+import {
+  getAllUsersReducer,
+  loginUserReducer,
+  registerUserReducer,
+} from "./reducers/userReducers";
 import {
   checkoutOrderReducer,
+  getAllOrdersReducer,
   getUsersOrdersReducer,
 } from "./reducers/orderReducers";
 
@@ -16,6 +26,11 @@ const finalReducer = combineReducers({
   loginUserReducer: loginUserReducer,
   checkoutOrderReducer: checkoutOrderReducer,
   getUsersOrdersReducer: getUsersOrdersReducer,
+  getAllUsersReducer: getAllUsersReducer,
+  getAllOrdersReducer: getAllOrdersReducer,
+  addBurgersReducer: addBurgersReducer,
+  editBurgerReducer: editBurgerReducer,
+  getBurgerByIdReducer: getBurgerByIdReducer,
 });
 
 const cartItems = localStorage.getItem("cartItems")
@@ -26,19 +41,12 @@ const currentUser = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser"))
   : null;
 
-const userOrders = localStorage.getItem("userOrders")
-  ? JSON.parse(localStorage.getItem("userOrders"))
-  : [];
-
 const initialState = {
   cartReducer: {
     cartItems: cartItems,
   },
   loginUserReducer: {
     currentUser: currentUser,
-  },
-  userOrders: {
-    userOrders: userOrders,
   },
 };
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const orderModel = require("../models/orderModel");
+
 const UserModel = require("../models/userModel");
 const router = express.Router();
 
@@ -41,6 +42,29 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     res.send(error);
+  }
+});
+
+//get all users
+router.get("/getAllUsers", (req, res) => {
+  UserModel.find({}, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
+
+router.post("/deleteUser", async (req, res) => {
+  const userid = req.body.userid;
+  //  const {burgerid} = req.body --> destruct ederek alma
+
+  try {
+    await UserModel.findOneAndDelete({ _id: userid });
+    res.send("Kullanıcı silme başarılı");
+  } catch {
+    res.status(400).json({ message: error });
   }
 });
 

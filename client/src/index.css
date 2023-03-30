@@ -25,3 +25,9 @@ code {
 .row {
   --bs-gutter-x: 0;
 }
+
+.abz input,
+.abz textarea,
+.abz select {
+  border: 2px solid #f49d1a !important;
+}
